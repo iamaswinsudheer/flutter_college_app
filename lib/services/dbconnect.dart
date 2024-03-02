@@ -4,7 +4,7 @@ import 'package:tc_college_app/services/manageToken.dart';
 
 class DbConnector {
   final String baseUrl;
-  DbConnector({this.baseUrl = "http://dev.danwand.in"});
+  DbConnector({this.baseUrl = "http://65.21.180.194"});
 
   //function for fetching user details
   Future<List<Map<String, dynamic>>> getUserDetails() async {

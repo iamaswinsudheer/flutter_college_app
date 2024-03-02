@@ -43,7 +43,7 @@ class _DocumentViewerState extends State<DocumentViewer> {
     Map<String, dynamic>? document = widget.courseDetails
         .firstWhere((course) => course['title'].toString() == widget.docChoosed);
 
-    return document['pdf']; // Assuming 'pdf' is the key for the file path in your courseDetails.
+    return document['pdf']; 
   }
 
   @override
