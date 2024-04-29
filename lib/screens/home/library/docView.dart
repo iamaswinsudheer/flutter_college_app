@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:tc_college_app/screens/shared/constants.dart';
 
 class DocumentViewer extends StatefulWidget {
-  final String? docChoosed;
-  final List<Map<String, dynamic>> courseDetails;
-  const DocumentViewer({super.key, required this.docChoosed, required this.courseDetails}); 
+  final String? selectedDoc;
+  final List<dynamic> books;
+  const DocumentViewer({super.key, required this.selectedDoc, required this.books}); 
 
   @override
   State<DocumentViewer> createState() => _DocumentViewerState();
@@ -17,6 +18,7 @@ class _DocumentViewerState extends State<DocumentViewer> {
   @override
   void initState(){
     super.initState();
+    filePath = getFilePath();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -33,27 +35,25 @@ class _DocumentViewerState extends State<DocumentViewer> {
     super.dispose();
   }
 
-  @override
-  void didChangeDependencies(){
-    super.didChangeDependencies();
-    filePath = getFilePath();
-  }
-
   String? getFilePath() {
-    Map<String, dynamic>? document = widget.courseDetails
-        .firstWhere((course) => course['title'].toString() == widget.docChoosed);
+    Map<String, dynamic>? document = widget.books
+        .firstWhere((course) => course['title'].toString() == widget.selectedDoc);
 
-    return document['pdf']; 
+    return document!['pdf']; 
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.docChoosed);
-    return SfPdfViewer.network(
-      filePath!,
-      enableTextSelection: false,
-      enableDoubleTapZooming: true,
-      
+    return Scaffold(
+      backgroundColor: themeColor,
+      body: SafeArea(
+        child: SfPdfViewer.network(
+          filePath!,
+          enableTextSelection: false,
+          enableDoubleTapZooming: true,
+          
+        ),
+      ),
     );
   }
 }

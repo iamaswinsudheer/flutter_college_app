@@ -82,6 +82,8 @@ class CustomDocTile extends StatelessWidget {
               Expanded(
                 child: Image.asset(
                   'assets/images/book.png',
+                  //<a href="https://www.flaticon.com/free-icons/open-book" 
+                  //title="open book icons">Open book icons created by Karyative - Flaticon</a>
                   fit: BoxFit.cover,
                 ),
               ),

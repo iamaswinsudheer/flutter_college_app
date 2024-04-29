@@ -1,84 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:tc_college_app/screens/home/library/docView.dart';
 import 'package:tc_college_app/screens/shared/constants.dart';
-import 'package:tc_college_app/services/dbconnect.dart';
 
 class StudyMaterials extends StatefulWidget {
-  final String? courseChoosed;
-  final String? yearChoosed;
-  final String? subjectChoosed;
-  final String? unitChoosed;
-  final String? userCourse;
-  final List<Map<String, dynamic>> courseDetails;
-  const StudyMaterials({
-    super.key,
-    required this.courseChoosed,
-    required this.yearChoosed,
-    required this.subjectChoosed,
-    required this.unitChoosed,
-    required this.userCourse,
-    required this.courseDetails,
-  });
+  final dynamic books;
+  final String selectedSubject;
+  final String selectedIndex;
+  const StudyMaterials(
+      {super.key,
+      required this.books,
+      required this.selectedSubject,
+      required this.selectedIndex});
 
   @override
   State<StudyMaterials> createState() => _StudyMaterialsState();
 }
 
 class _StudyMaterialsState extends State<StudyMaterials> {
-  DbConnector dbConnector = DbConnector();
-  late List<String> docTitles;
+  late List<String> documents;
+
+  List<String> getDocuments() {
+    Set<String> docSet = widget.books
+        .where((doc) =>
+            doc['subject'] == widget.selectedSubject &&
+            doc['unit'].toString() == widget.selectedIndex)
+        .map<String>((doc) => doc['title'].toString())
+        .toSet();
+    return docSet.toList();
+  }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    docTitles = getDocTitles();
-  }
-
-  List<String> getDocTitles() {
-    switch (widget.userCourse) {
-      case 'degree':
-        {
-          Set<String> titleSet = widget.courseDetails
-              .where((course) =>
-                  course['course'].toString() == widget.courseChoosed &&
-                  course['year'].toString() == widget.yearChoosed &&
-                  course['subject'].toString() == widget.subjectChoosed &&
-                  course['unit'].toString() == widget.unitChoosed)
-              .map((course) => course['title'].toString())
-              .toSet();
-          return titleSet.toList();
-        }
-      case 'diploma':{
-        Set<String> titleSet = widget.courseDetails
-              .where((course) =>
-                  course['course'].toString() == widget.courseChoosed &&
-                  course['subject'].toString() == widget.subjectChoosed &&
-                  course['unit'].toString() == widget.unitChoosed)
-              .map((course) => course['title'].toString())
-              .toSet();
-          return titleSet.toList();
-      }
-      case 'certificate':{
-        Set<String> titleSet = widget.courseDetails
-              .where((course) =>
-                  course['subject'].toString() == widget.subjectChoosed &&
-                  course['unit'].toString() == widget.unitChoosed)
-              .map((course) => course['title'].toString())
-              .toSet();
-          return titleSet.toList();
-      }
-      default:
-        return [];
-    }
-  }
-
-  void _onTapHandler(index) {
-    final String docChoosed = docTitles[index];
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => DocumentViewer(
-                docChoosed: docChoosed, courseDetails: widget.courseDetails)));
+  void initState() {
+    super.initState();
+    documents = getDocuments();
   }
 
   @override
@@ -104,14 +58,20 @@ class _StudyMaterialsState extends State<StudyMaterials> {
             crossAxisCount: 2,
             crossAxisSpacing: 20.0,
             mainAxisSpacing: 20.0,
-            childAspectRatio: 0.9,
+            // childAspectRatio: 0.9,
+            childAspectRatio: 0.95
           ),
-          itemCount: docTitles.length,
+          itemCount: documents.length,
           itemBuilder: (context, index) {
             return CustomDocTile(
-                title: docTitles[index],
+                title: documents[index],
                 onTap: () {
-                  _onTapHandler(index);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DocumentViewer(
+                              selectedDoc: documents[index],
+                              books: widget.books)));
                 });
           },
         ),
