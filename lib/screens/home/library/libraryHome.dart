@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tc_college_app/screens/home/library/courses.dart';
 import 'package:tc_college_app/screens/home/library/subjects.dart';
 import 'package:tc_college_app/screens/shared/constants.dart';
 import 'package:tc_college_app/services/fetchUserDetails.dart';
@@ -79,14 +80,7 @@ class _LibraryHomeState extends State<LibraryHome> {
             final userDetails = snapshot.data![0];
             String? yearOfStudy = userDetails['year_of_study'];
             String? userCourse = userDetails['course'];
-            List<String> programs = [];
-            if (userDetails.containsKey('certificate_books')) {
-              programs.add('Certificate books');
-            }
-            if (userDetails.containsKey('diploma_books')) {
-              programs.add('Diploma books');
-            }
-
+            List<String> programs = ['Certificate books', 'Diploma books'];
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(screenSize.height * 0.3),
@@ -181,13 +175,23 @@ class _LibraryHomeState extends State<LibraryHome> {
                           height: screenSize.height * 0.17,
                           child: InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SelectSubjects(
-                                            notDegreebooks: userDetails[
-                                                mapToKeys(programs[index])],
-                                          )));
+                              if (index == 0) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SelectSubjects(
+                                              notDegreebooks: userDetails[
+                                                  mapToKeys(programs[index])],
+                                            )));
+                              } else if (index == 1) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ChooseCourse(
+                                              selectedBook: userDetails[
+                                                  mapToKeys(programs[1])],
+                                            )));
+                              }
                             },
                             child: Padding(
                               padding: EdgeInsets.symmetric(

@@ -87,8 +87,6 @@ class _SelectSubjectsState extends State<SelectSubjects> {
                       );
                     } else {
                       final degreeBooks = snapshot.data!;
-                      print(widget.yearOfStudy);
-                      print(widget.userCourse);
                       final selectedDegreeBooks = degreeBooks
                           .where((book) =>
                               book['year'].toString() == widget.yearOfStudy &&

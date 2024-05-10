@@ -56,7 +56,7 @@ class _SelectUnitsState extends State<SelectUnits> {
               return ListTile(
                 shape: Border(bottom: BorderSide(color: Colors.grey[400]!)),
                 title: Text(
-                  'Unit ${uniqueUnits[index]}',
+                  uniqueUnits[index],
                   style: TextStyle(
                     color: Colors.grey[800],
                     letterSpacing: 1.0,
