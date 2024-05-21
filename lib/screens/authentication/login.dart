@@ -245,7 +245,7 @@ class _LoginState extends State<Login> {
                                               style: ElevatedButton.styleFrom(
                                                 minimumSize:
                                                     const Size.fromHeight(50),
-                                                primary: themeColor,
+                                                backgroundColor: themeColor,
                                                 shape: BeveledRectangleBorder(),
                                               ),
                                               child: Text(

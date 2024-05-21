@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tc_college_app/screens/home/library/docView.dart';
+import 'package:tc_college_app/screens/home/library/pdfViewer.dart';
 import 'package:tc_college_app/screens/shared/constants.dart';
 
 class StudyMaterials extends StatefulWidget {
@@ -55,12 +55,10 @@ class _StudyMaterialsState extends State<StudyMaterials> {
         padding: EdgeInsets.all(screenSize.width * 0.05),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 20.0,
-            mainAxisSpacing: 20.0,
-            // childAspectRatio: 0.9,
-            childAspectRatio: 0.95
-          ),
+              crossAxisCount: 2,
+              crossAxisSpacing: 20.0,
+              mainAxisSpacing: 20.0,
+              childAspectRatio: 0.95),
           itemCount: documents.length,
           itemBuilder: (context, index) {
             return CustomDocTile(
@@ -69,7 +67,7 @@ class _StudyMaterialsState extends State<StudyMaterials> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => DocumentViewer(
+                          builder: (context) => PDFViewer(
                               selectedDoc: documents[index],
                               books: widget.books)));
                 });

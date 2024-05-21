@@ -9,9 +9,6 @@ class UserAuthentication {
   Future<Map<String, dynamic>> getAccessToken(
       String email, String password, String? phone_id) async {
     try {
-      print(email);
-      print(password);
-      print(phone_id);
       final response = await http.post(Uri.parse(tokenUrl),
           body: {'email': email, 'password': password, 'phone_id': phone_id});
       if (response.statusCode == 200) {
@@ -20,7 +17,7 @@ class UserAuthentication {
       } else {
         Map<String, dynamic> errorResponse = jsonDecode(response.body);
         String errorMessage = errorResponse['detail'];
-         showDialog(
+        showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -36,7 +33,8 @@ class UserAuthentication {
             );
           },
         );
-        return Future.error('Server error : ${response.statusCode}, ${response.body}');
+        return Future.error(
+            'Server error : ${response.statusCode}, ${response.body}');
       }
     } catch (e) {
       return Future.error(e);

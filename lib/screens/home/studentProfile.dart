@@ -205,7 +205,7 @@ class _StudentProfileState extends State<StudentProfile> {
                     ),
                     style: ElevatedButton.styleFrom(
                       shape: BeveledRectangleBorder(),
-                      primary: themeColor,
+                      backgroundColor: themeColor,
                       minimumSize: const Size.fromHeight(50),
                     ),
                   ),

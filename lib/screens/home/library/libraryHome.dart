@@ -69,7 +69,7 @@ class _LibraryHomeState extends State<LibraryHome> {
                         style: TextStyle(fontSize: 18.0, color: Colors.grey),
                       ),
                       Text(
-                        'Please come back later',
+                        'Please come back later.',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 18.0, color: Colors.grey),
                       ),
