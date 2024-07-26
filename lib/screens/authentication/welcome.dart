@@ -29,8 +29,7 @@ class Welcome extends StatelessWidget {
               children: <Widget>[
                 Image.asset(
                   'assets/images/_Pngtree_education_and_online_learning_flat_5373900-removebg-preview.png',
-                  //illustration PNG Designed By RedvyCreative from https://pngtree.com/freepng/education-and-
-                  //online-learning-flat-concept_5373900.html?sol=downref&id=bef
+                  //illustration PNG Designed By RedvyCreative from https://pngtree.com/freepng/education-and-online-learning-flat-concept_5373900.html?sol=downref&id=bef
                   height: 250.0,
                   width: 250.0,
                 ),

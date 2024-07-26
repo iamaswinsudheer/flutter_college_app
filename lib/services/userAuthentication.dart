@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class UserAuthentication {
   BuildContext context;
   UserAuthentication({required this.context});
-  String tokenUrl = "http://65.21.180.194/auth/token/";
+  String tokenUrl = "https://aviation.danwand.in/auth/token/";
   Future<Map<String, dynamic>> getAccessToken(
       String email, String password, String? phone_id) async {
     try {

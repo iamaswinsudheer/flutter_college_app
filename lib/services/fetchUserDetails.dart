@@ -5,7 +5,7 @@ import 'package:tc_college_app/services/manageToken.dart';
 
 class UserDetailsFetcher {
   Future<List<dynamic>> fetchUserDetails() async {
-    String api = 'http://65.21.180.194/auth/profile/';
+    String api = 'https://aviation.danwand.in/auth/profile/';
     String? bearerToken = await TokenManager.getToken();
     try {
       final response = await http.get(Uri.parse(api), headers: {

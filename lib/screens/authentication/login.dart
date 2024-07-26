@@ -195,52 +195,93 @@ class _LoginState extends State<Login> {
                                         child: Align(
                                           alignment: Alignment.bottomCenter,
                                           child: ElevatedButton(
-                                              onPressed: () async {
-                                                if (_formKey.currentState!
-                                                    .validate()) {
-                                                  setState(() {
-                                                    loadingScreen = true;
-                                                  });
-                                                  try {
-                                                    deviceId =
-                                                        await deviceIdGenerator
-                                                            .getDeviceId();
-                
-                                                    try {
-                                                      tokens = await userAuth
-                                                          .getAccessToken(
-                                                              email,
-                                                              password,
-                                                              deviceId);
-                                                    } catch (e) {
-                                                      setState(() {
-                                                        loadingScreen = false;
-                                                      });
-                                                    }
-                                                    setState(() {
-                                                      loadingScreen = false;
+                                              onPressed: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                        dialogContext) {
+                                                      return AlertDialog(
+                                                        shape:
+                                                            RoundedRectangleBorder(),
+                                                        title: Text(
+                                                            'Permission Required'),
+                                                        content: Text(
+                                                            'This app collects device id when the user login to ensure exclusivity of app contents to authorized users only.'),
+                                                        actions: [
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child: Text(
+                                                                'Go Back',
+                                                                style: TextStyle(
+                                                                    color:
+                                                                        themeColor),
+                                                              )),
+                                                          TextButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                Navigator.pop(
+                                                                    dialogContext);
+                                                                if (_formKey
+                                                                    .currentState!
+                                                                    .validate()) {
+                                                                  setState(() {
+                                                                    loadingScreen =
+                                                                        true;
+                                                                  });
+                                                                  try {
+                                                                    deviceId =
+                                                                        await deviceIdGenerator
+                                                                            .getDeviceId();
+
+                                                                    try {
+                                                                      tokens = await userAuth.getAccessToken(
+                                                                          email,
+                                                                          password,
+                                                                          deviceId);
+                                                                    } catch (e) {
+                                                                      setState(
+                                                                          () {
+                                                                        loadingScreen =
+                                                                            false;
+                                                                      });
+                                                                    }
+                                                                    setState(
+                                                                        () {
+                                                                      loadingScreen =
+                                                                          false;
+                                                                    });
+                                                                    if (tokens
+                                                                        .containsKey(
+                                                                            'access_token')) {
+                                                                      TokenManager
+                                                                          .saveToken(
+                                                                              tokens['access_token']);
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(
+                                                                              builder: (context) => Home()));
+                                                                    } else {
+                                                                      print(
+                                                                          'token not found');
+                                                                    }
+                                                                  } catch (error) {
+                                                                    print(
+                                                                        error);
+                                                                  }
+                                                                }
+                                                              },
+                                                              child: Text(
+                                                                'I Agree',
+                                                                style: TextStyle(
+                                                                    color:
+                                                                        themeColor),
+                                                              ))
+                                                        ],
+                                                      );
                                                     });
-                                                    if (tokens.containsKey(
-                                                        'access_token')) {
-                                                      TokenManager.saveToken(
-                                                          tokens[
-                                                              'access_token']);
-                                                      print(tokens[
-                                                          'access_token']);
-                
-                                                      Navigator.pushReplacement(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder:
-                                                                  (context) =>
-                                                                      Home()));
-                                                    } else {
-                                                      print('token not found');
-                                                    }
-                                                  } catch (error) {
-                                                    print(error);
-                                                  }
-                                                }
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 minimumSize:

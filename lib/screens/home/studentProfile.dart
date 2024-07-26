@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tc_college_app/screens/shared/constants.dart';
 import 'package:tc_college_app/services/fetchUserDetails.dart';
+import 'package:tc_college_app/screens/home/aboutApp/aboutApp.dart';
 
 class StudentProfile extends StatefulWidget {
   const StudentProfile({
@@ -36,26 +37,35 @@ class _StudentProfileState extends State<StudentProfile> {
             );
           } else if (snapshot.hasError) {
             return Scaffold(
-              body: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                  Text(
-                    'Something went wrong :(',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18.0, color: Colors.grey),
-                  ),
-                  Text(
-                    'Please come back later',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18.0, color: Colors.grey),
-                  ),
-                ]),
+              body: SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenSize.width * 0.05,
+                      vertical: screenSize.height * 0.05),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Something went wrong :(',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'Try the following steps to resolve the issue.',
+                          style: TextStyle(fontSize: 14.0, color: Colors.grey),
+                        ),
+                        Text(
+                          '> Check your internet connection.\n> Log out and log back into your account.\n> Wait until our development team resolves the issue.',
+                          style: TextStyle(fontSize: 14.0, color: Colors.grey),
+                        ),
+                      ]),
+                ),
               ),
             );
           } else {
-            print(snapshot.data);
             final userDetails = snapshot.data![0];
             return Scaffold(
               appBar: PreferredSize(
@@ -80,8 +90,7 @@ class _StudentProfileState extends State<StudentProfile> {
                           backgroundColor: themeColor,
                           radius: 70.0,
                           backgroundImage: AssetImage('assets/images/user.png'),
-                          //<a href="https://www.flaticon.com/free-icons/student" 
-                          //title="student icons">Student icons created by Aficons studio - Flaticon</a>
+                          //<a href="https://www.flaticon.com/free-icons/student" title="student icons">Student icons created by Aficons studio - Flaticon</a>
                         ),
                       ),
                       SizedBox(
@@ -106,7 +115,7 @@ class _StudentProfileState extends State<StudentProfile> {
               body: Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: screenSize.width * 0.05,
-                    vertical: screenSize.height * 0.04),
+                    vertical: screenSize.height * 0.02),
                 child: ListView(children: [
                   Text(
                     'Email',
@@ -207,6 +216,37 @@ class _StudentProfileState extends State<StudentProfile> {
                       shape: BeveledRectangleBorder(),
                       backgroundColor: themeColor,
                       minimumSize: const Size.fromHeight(50),
+                    ),
+                  ),
+                  SizedBox(
+                    height: screenSize.height * 0.01,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => AboutApp()));
+                    },
+                    child: Container(
+                      height: screenSize.height * 0.07,
+                      width: screenSize.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.info_outline,
+                            color: Colors.grey[600],
+                          ),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Text(
+                            'App Info (Version 1.0.0)',
+                            style: TextStyle(
+                                fontSize: 16.0, color: Colors.grey[600]),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ]),

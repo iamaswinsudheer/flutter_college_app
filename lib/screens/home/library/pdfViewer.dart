@@ -42,6 +42,7 @@ class _PDFViewerState extends State<PDFViewer> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.selectedDoc);
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(

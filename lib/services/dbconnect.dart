@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tc_college_app/services/manageToken.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DbConnector {
   final String baseUrl;
-  DbConnector({this.baseUrl = "http://65.21.180.194"});
+  DbConnector({this.baseUrl = "https://aviation.danwand.in"});
 
   //function for fetching degree books
   Future<List<Map<String, dynamic>>> getDegreeBooks() async {
@@ -24,5 +25,13 @@ class DbConnector {
     } catch (e) {
       return Future.error(e);
     }
+  }
+
+
+  //function for loading privacy policy in browser
+  Future<void> launchPrivacyPolicy()async{
+    if(!await launchUrl(Uri.parse('$baseUrl/privacy'))){
+      throw Exception('url launch failed');
+    };
   }
 }
